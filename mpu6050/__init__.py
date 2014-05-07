@@ -2101,8 +2101,8 @@ class MPU6050:
         # Disabling DMP (you turn it on later)
         self.setDMPEnabled(False)
 
-        # Setting up internal 42-byte (default) DMP packet buffer
-        self.dmpPacketSize = 42
+        # Setting up internal 48-byte (default) DMP packet buffer
+        self.dmpPacketSize = 48
 
         # Resetting FIFO and clearing INT status one last time
         self.resetFIFO()
