@@ -1,4 +1,4 @@
-#!/usr/bin/python
+# coding=utf-8
 
 # Python Standard Library Imports
 import smbus
@@ -14,9 +14,9 @@ pass
 # ===========================================================================
 
 class PyComms:
-    def __init__(self, address, bus=smbus.SMBus(0)):
+    def __init__(self, address, bus):
         self.address = address
-        self.bus = bus
+        self.bus = bus or smbus.SMBus(1)
 
     def reverseByteOrder(self, data):
         # Reverses the byte order of an int (16-bit) or long (32-bit) value
