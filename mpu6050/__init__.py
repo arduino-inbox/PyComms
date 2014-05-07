@@ -1855,11 +1855,12 @@ class MPU6050:
         return self.dmpPacketSize
 
     def dmpGetAccel(self, packet):
-        return {
-            'x': ((u_to_s(packet[34]) << 8) + packet[35]),
-            'y': ((u_to_s(packet[38]) << 8) + packet[39]),
-            'z': ((u_to_s(packet[42]) << 8) + packet[43]),
-        }
+        pass
+        #return {
+        #    'x': ((u_to_s(packet[34]) << 8) + packet[35]),
+        #    'y': ((u_to_s(packet[38]) << 8) + packet[39]),
+        #    'z': ((u_to_s(packet[42]) << 8) + packet[43]),
+        #}
 
     def dmpGetQuaternion(self, packet):
         return {
@@ -2101,8 +2102,8 @@ class MPU6050:
         # Disabling DMP (you turn it on later)
         self.setDMPEnabled(False)
 
-        # Setting up internal 48-byte (default) DMP packet buffer
-        self.dmpPacketSize = 48
+        # Setting up internal 42-byte (default) DMP packet buffer
+        self.dmpPacketSize = 42
 
         # Resetting FIFO and clearing INT status one last time
         self.resetFIFO()
