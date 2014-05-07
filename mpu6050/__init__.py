@@ -1848,17 +1848,17 @@ class MPU6050:
         # | [ACC X ][      ][ACC Y ][      ][ACC Z ][      ][      ] |
         # |  28  29  30  31  32  33  34  35  36  37  38  39  40  41  |
         return {
-            'x': ((u_to_s(packet[28]) << 8) + u_to_s(packet[29])),
-            'y': ((u_to_s(packet[32]) << 8) + u_to_s(packet[33])),
-            'z': ((u_to_s(packet[36]) << 8) + u_to_s(packet[37])),
+            'x': ((packet[28] << 8) + packet[29]),
+            'y': ((packet[32] << 8) + packet[33]),
+            'z': ((packet[36] << 8) + packet[37]),
         }
 
     def dmpGetQuaternion(self, packet):
         return {
-            'w': ((u_to_s(packet[0]) << 8) + u_to_s(packet[1])) / 16384.0,
-            'x': ((u_to_s(packet[4]) << 8) + u_to_s(packet[5])) / 16384.0,
-            'y': ((u_to_s(packet[8]) << 8) + u_to_s(packet[9])) / 16384.0,
-            'z': ((u_to_s(packet[12]) << 8) + u_to_s(packet[13])) / 16384.0,
+            'w': ((packet[0] << 8) + packet[1]) / 16384.0,
+            'x': ((packet[4] << 8) + packet[5]) / 16384.0,
+            'y': ((packet[8] << 8) + packet[9]) / 16384.0,
+            'z': ((packet[12] << 8) + packet[13]) / 16384.0,
         }
 
     def dmpGetGyro(self):
