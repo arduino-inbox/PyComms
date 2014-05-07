@@ -18,21 +18,21 @@ class PCA9685():
     i2c = None
 
     # Registers/etc.
-    __SUBADR1            = 0x02
-    __SUBADR2            = 0x03
-    __SUBADR3            = 0x04
-    __MODE1              = 0x00
-    __PRESCALE           = 0xFE
-    __LED0_ON_L          = 0x06
-    __LED0_ON_H          = 0x07
-    __LED0_OFF_L         = 0x08
-    __LED0_OFF_H         = 0x09
-    __ALLLED_ON_L        = 0xFA
-    __ALLLED_ON_H        = 0xFB
-    __ALLLED_OFF_L       = 0xFC
-    __ALLLED_OFF_H       = 0xFD
+    __SUBADR1 = 0x02
+    __SUBADR2 = 0x03
+    __SUBADR3 = 0x04
+    __MODE1 = 0x00
+    __PRESCALE = 0xFE
+    __LED0_ON_L = 0x06
+    __LED0_ON_H = 0x07
+    __LED0_OFF_L = 0x08
+    __LED0_OFF_H = 0x09
+    __ALLLED_ON_L = 0xFA
+    __ALLLED_ON_H = 0xFB
+    __ALLLED_OFF_L = 0xFC
+    __ALLLED_OFF_H = 0xFD
 
-    def __init__(self, address = 0x40):
+    def __init__(self, address=0x40):
         self.i2c = PyComms(address)
         self.address = address
         self.i2c.write8(self.__MODE1, 0x00)
