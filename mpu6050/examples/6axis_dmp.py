@@ -1,4 +1,5 @@
-import time
+# coding=utf-8
+
 import math
 import mpu6050
 
