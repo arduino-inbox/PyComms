@@ -8,7 +8,7 @@ from math import atan, atan2, sqrt
 pass
 
 # Custom Imports
-from pycomms import PyComms
+from pycomms import PyComms, u_to_s
 
 
 class MPU6050:
@@ -1568,9 +1568,6 @@ class MPU6050:
     def getFIFOBytes(self, length):
         return self.i2c.readBytes(self.MPU6050_RA_FIFO_R_W, length)
 
-    def getFIFOBytesS(self, length):
-        return self.i2c.readBytesS(self.MPU6050_RA_FIFO_R_W, length)
-
     def setFIFOByte(self, data):
         self.i2c.write8(self.MPU6050_RA_FIFO_R_W, data)
 
@@ -1859,17 +1856,17 @@ class MPU6050:
 
     def dmpGetAccel(self, packet):
         return {
-            'x': ((packet[34] << 8) + packet[35]),
-            'y': ((packet[38] << 8) + packet[39]),
-            'z': ((packet[42] << 8) + packet[43]),
+            'x': ((u_to_s(packet[34]) << 8) + packet[35]),
+            'y': ((u_to_s(packet[38]) << 8) + packet[39]),
+            'z': ((u_to_s(packet[42]) << 8) + packet[43]),
         }
 
     def dmpGetQuaternion(self, packet):
         return {
-            'w': ((packet[0] << 8) + packet[1]) / 16384.0,
-            'x': ((packet[4] << 8) + packet[5]) / 16384.0,
-            'y': ((packet[8] << 8) + packet[9]) / 16384.0,
-            'z': ((packet[12] << 8) + packet[13]) / 16384.0,
+            'w': ((u_to_s(packet[0]) << 8) + packet[1]) / 16384.0,
+            'x': ((u_to_s(packet[4]) << 8) + packet[5]) / 16384.0,
+            'y': ((u_to_s(packet[8]) << 8) + packet[9]) / 16384.0,
+            'z': ((u_to_s(packet[12]) << 8) + packet[13]) / 16384.0,
         }
 
     def dmpGetGyro(self):

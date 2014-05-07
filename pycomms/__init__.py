@@ -92,16 +92,6 @@ class PyComms:
 
         return output
 
-    def readBytesS(self, reg, length):
-        output = []
-
-        i = 0
-        while i < length:
-            output.append(self.readS8(reg))
-            i += 1
-
-        return output
-
     def readBytesListU(self, reg, length):
         output = []
 
@@ -188,3 +178,9 @@ class PyComms:
             print (
             "Error accessing 0x%02X: Check your I2C address" % self.address)
             return -1
+
+
+def u_to_s(v):
+    if v > 127:
+        v -= 256
+    return v

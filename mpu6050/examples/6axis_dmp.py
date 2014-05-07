@@ -29,18 +29,18 @@ while True:
         while fifoCount < packetSize:
             fifoCount = mpu.getFIFOCount()
 
-        result = mpu.getFIFOBytesS(packetSize)
+        result = mpu.getFIFOBytes(packetSize)
         q = mpu.dmpGetQuaternion(result)
         g = mpu.dmpGetGravity(q)
         ypr = mpu.dmpGetYawPitchRoll(q, g)
         a = mpu.dmpGetAccel(result)
 
-        print(int(ypr['yaw'] * 180 / math.pi)),
-        print(int(ypr['pitch'] * 180 / math.pi)),
-        print(int(ypr['roll'] * 180 / math.pi)),
-        print(int(a['x'] * 9.8)),
-        print(int(a['y'] * 9.8)),
-        print(int(a['z'] * 9.8))
+        print(ypr['yaw'] * 180 / math.pi),
+        print(ypr['pitch'] * 180 / math.pi),
+        print(ypr['roll'] * 180 / math.pi),
+        print(a['x']),
+        print(a['y']),
+        print(a['z'])
 
         # track FIFO count here in case there is > 1 packet available
         # (this lets us immediately read more without waiting for an
