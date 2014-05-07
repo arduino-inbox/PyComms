@@ -13,10 +13,14 @@ pass
 # PyComms I2C Base Class (an rewriten Adafruit_I2C pythone class clone)
 # ===========================================================================
 
+
 class PyComms:
-    def __init__(self, address, bus):
+    def __init__(self, address, bus=None):
+        if not bus:
+            bus = smbus.SMBus(1)
+
         self.address = address
-        self.bus = bus or smbus.SMBus(1)
+        self.bus = bus
 
     def reverseByteOrder(self, data):
         # Reverses the byte order of an int (16-bit) or long (32-bit) value

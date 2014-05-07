@@ -13,6 +13,7 @@ from pycomms import PyComms
 # Adafruit BMP085 Class (slightly modified)
 # ===========================================================================
 
+
 class BMP085:
     i2c = None
 
