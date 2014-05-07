@@ -92,6 +92,16 @@ class PyComms:
 
         return output
 
+    def readBytesS(self, reg, length):
+        output = []
+
+        i = 0
+        while i < length:
+            output.append(self.readS8(reg))
+            i += 1
+
+        return output
+
     def readBytesListU(self, reg, length):
         output = []
 

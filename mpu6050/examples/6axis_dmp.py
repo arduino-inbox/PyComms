@@ -29,7 +29,7 @@ while True:
         while fifoCount < packetSize:
             fifoCount = mpu.getFIFOCount()
 
-        result = mpu.getFIFOBytes(packetSize)
+        result = mpu.getFIFOBytesS(packetSize)
         q = mpu.dmpGetQuaternion(result)
         g = mpu.dmpGetGravity(q)
         ypr = mpu.dmpGetYawPitchRoll(q, g)

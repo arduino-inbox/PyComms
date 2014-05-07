@@ -1568,6 +1568,9 @@ class MPU6050:
     def getFIFOBytes(self, length):
         return self.i2c.readBytes(self.MPU6050_RA_FIFO_R_W, length)
 
+    def getFIFOBytesS(self, length):
+        return self.i2c.readBytesS(self.MPU6050_RA_FIFO_R_W, length)
+
     def setFIFOByte(self, data):
         self.i2c.write8(self.MPU6050_RA_FIFO_R_W, data)
 
