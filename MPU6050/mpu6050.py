@@ -1485,37 +1485,27 @@ class MPU6050:
     def dmpGetFIFOPacketSize(self):
         return self.dmpPacketSize    
     
-    def dmpGetAccel(self):
-        pass
-    
+    def dmpGetAccel(self, packet):
+        return {
+            'x': ((packet[34] << 8) + packet[35]),
+            'y': ((packet[38] << 8) + packet[39]),
+            'z': ((packet[42] << 8) + packet[43]),
+        }
+
     def dmpGetQuaternion(self, packet):
-        # We are dealing with signed bytes
-        if packet[0] > 127:
-            packet[0] -= 256
+        return {
+            'w': ((packet[0] << 8) + packet[1]) / 16384.0,
+            'x': ((packet[4] << 8) + packet[5]) / 16384.0,
+            'y': ((packet[8] << 8) + packet[9]) / 16384.0,
+            'z': ((packet[12] << 8) + packet[13]) / 16384.0,
+        }
 
-        if packet[4] > 127:
-            packet[4] -= 256
-            
-        if packet[8] > 127:
-            packet[8] -= 256            
-          
-        if packet[12] > 127:
-            packet[12] -= 256          
-
-        data = {
-            'w' : ((packet[0] << 8) + packet[1]) / 16384.0,  
-            'x' : ((packet[4] << 8) + packet[5]) / 16384.0,
-            'y' : ((packet[8] << 8) + packet[9]) / 16384.0,
-            'z' : ((packet[12] << 8) + packet[13]) / 16384.0}        
-        
-        return data    
-    
     def dmpGetGyro(self):
         pass
     
     def dmpGetLinearAccel(self):
         pass
-    
+
     def dmpGetLinearAccelInWorld(self):
         pass
         
