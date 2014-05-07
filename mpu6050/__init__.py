@@ -367,11 +367,6 @@ class MPU6050:
     MPU6050_BANKSEL_MEM_SEL_BIT = 4
     MPU6050_BANKSEL_MEM_SEL_LENGTH = 5
 
-    MPU6050_BANKSEL_PRFTCH_EN_BIT = 6
-    MPU6050_BANKSEL_CFG_USER_BANK_BIT = 5
-    MPU6050_BANKSEL_MEM_SEL_BIT = 4
-    MPU6050_BANKSEL_MEM_SEL_LENGTH = 5
-
     MPU6050_WHO_AM_I_BIT = 6
     MPU6050_WHO_AM_I_LENGTH = 6
 
@@ -389,16 +384,11 @@ class MPU6050:
     #                             |
     # |
     #                             |
-    # | [QUAT W][      ][QUAT X][      ][QUAT Y][      ][QUAT Z][      ][
-    # GYRO X][      ][GYRO Y][      ] |
-    # |   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16
-    # 17  18  19  20  21  22  23  |
-    # |
-    #                             |
-    # | [GYRO Z][      ][ACC X ][      ][ACC Y ][      ][ACC Z ][      ][
-    #   ]                         |
-    # |  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40
-    # 41                          |
+    # | [QUAT W][      ][QUAT X][      ][QUAT Y][      ][QUAT Z][      ][GYRO X][      ][GYRO Y][      ] |
+    # |   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  |
+    # |                                                                                                  |
+    # | [GYRO Z][      ][ACC X ][      ][ACC Y ][      ][ACC Z ][      ][      ]                         |
+    # |  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41                          |
     # ====================================================================================================
 
     # this block of memory gets written to the MPU on start-up, and it seems
@@ -1855,19 +1845,20 @@ class MPU6050:
         return self.dmpPacketSize
 
     def dmpGetAccel(self, packet):
-        pass
-        #return {
-        #    'x': ((u_to_s(packet[34]) << 8) + packet[35]),
-        #    'y': ((u_to_s(packet[38]) << 8) + packet[39]),
-        #    'z': ((u_to_s(packet[42]) << 8) + packet[43]),
-        #}
+        # | [ACC X ][      ][ACC Y ][      ][ACC Z ][      ][      ] |
+        # |  28  29  30  31  32  33  34  35  36  37  38  39  40  41  |
+        return {
+            'x': ((u_to_s(packet[28]) << 8) + u_to_s(packet[29])),
+            'y': ((u_to_s(packet[32]) << 8) + u_to_s(packet[33])),
+            'z': ((u_to_s(packet[36]) << 8) + u_to_s(packet[37])),
+        }
 
     def dmpGetQuaternion(self, packet):
         return {
-            'w': ((u_to_s(packet[0]) << 8) + packet[1]) / 16384.0,
-            'x': ((u_to_s(packet[4]) << 8) + packet[5]) / 16384.0,
-            'y': ((u_to_s(packet[8]) << 8) + packet[9]) / 16384.0,
-            'z': ((u_to_s(packet[12]) << 8) + packet[13]) / 16384.0,
+            'w': ((u_to_s(packet[0]) << 8) + u_to_s(packet[1])) / 16384.0,
+            'x': ((u_to_s(packet[4]) << 8) + u_to_s(packet[5])) / 16384.0,
+            'y': ((u_to_s(packet[8]) << 8) + u_to_s(packet[9])) / 16384.0,
+            'z': ((u_to_s(packet[12]) << 8) + u_to_s(packet[13])) / 16384.0,
         }
 
     def dmpGetGyro(self):

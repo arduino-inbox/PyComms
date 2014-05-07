@@ -37,7 +37,7 @@ while True:
 
         print(ypr['yaw'] * 180 / math.pi),
         print(ypr['pitch'] * 180 / math.pi),
-        print(ypr['roll'] * 180 / math.pi),
+        print(ypr['roll'] * 180 / math.pi)
         #print(a['x']),
         #print(a['y']),
         #print(a['z'])
