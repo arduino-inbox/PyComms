@@ -19,7 +19,7 @@ roll0 = 0
 ax0 = 0
 ay0 = 0
 az0 = 0
-precision = 1000
+precision = 100
 
 
 def ftoip(v):
@@ -85,6 +85,7 @@ while True:
                 ax0 = ax
                 ay0 = ay
                 az0 = az
+                print("Calibrating:", dt, yaw, pitch, roll, ax, ay, az)
         else:
             # Update time only when not calibrating!
             t0 = time()
