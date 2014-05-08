@@ -8,7 +8,7 @@ from math import atan, atan2, sqrt
 pass
 
 # Custom Imports
-from pycomms import PyComms, u_to_s
+from pycomms import PyComms, u_to_s, qv_mult
 
 
 class MPU6050:
