@@ -19,6 +19,19 @@ roll0 = 0
 ax0 = 0
 ay0 = 0
 az0 = 0
+precision = 1000
+
+
+def ftoip(v):
+    return int(precision * v)
+
+
+def equal(l1, l2):
+    for k, v1 in l1:
+        v2 = l2[k]
+        if ftoip(v1) != ftoip(v2):
+            return False
+    return True
 
 print "Calibrating..."
 
@@ -49,9 +62,9 @@ while True:
         la = mpu.dmpGetLinearAccel(a, g)
         laiw = mpu.dmpGetLinearAccelInWorld(a, q)
 
-        yaw = int(ypr['yaw'] * 180 / math.pi)  # radians to degrees
-        pitch = int(ypr['pitch'] * 180 / math.pi)
-        roll = int(ypr['roll'] * 180 / math.pi)
+        yaw = ypr['yaw'] * 180 / math.pi  # radians to degrees
+        pitch = ypr['pitch'] * 180 / math.pi
+        roll = ypr['roll'] * 180 / math.pi
         ax = laiw['x'] * 9.8
         ay = laiw['y'] * 9.8
         az = laiw['z'] * 9.8
@@ -59,14 +72,9 @@ while True:
         dt = time() - t0
 
         if calibrating:
-            if (
-                    # This is plain stupid, but will work for now
-                    int(100 * yaw) == int(100 * yaw0)
-                    and int(100 * pitch) == int(100 * pitch0)
-                    and int(100 * roll) == int(100 * roll0)
-                    and int(100 * ax) == int(100 * ax0)
-                    and int(100 * ay) == int(100 * ay0)
-                    and int(100 * az) == int(100 * az0)
+            if equal(
+                    l1=[yaw, pitch, roll, ax, ay, az],
+                    l2=[yaw0, pitch0, roll0, ax0, ay0, az0]
             ):
                 calibrating = False
                 print("Calibration done in ", dt, "seconds")
