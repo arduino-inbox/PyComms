@@ -60,12 +60,13 @@ while True:
 
         if calibrating:
             if (
-                    yaw == yaw0
-                    and pitch == pitch0
-                    and roll == roll0
-                    and ax == ax0
-                    and ay == ay0
-                    and az == az0
+                    # This is plain stupid, but will work for now
+                    int(100 * yaw) == int(100 * yaw0)
+                    and int(100 * pitch) == int(100 * pitch0)
+                    and int(100 * roll) == int(100 * roll0)
+                    and int(100 * ax) == int(100 * ax0)
+                    and int(100 * ay) == int(100 * ay0)
+                    and int(100 * az) == int(100 * az0)
             ):
                 calibrating = False
                 print("Calibration done in ", dt, "seconds")
