@@ -86,13 +86,12 @@ while True:
                 ay0 = ay
                 az0 = az
                 print(
-                    "Calibrating:", int(dt), ftoip(yaw), ftoip(pitch),
-                    ftoip(roll),
-                    ftoip(ax), ftoip(ay), ftoip(az))
+                    "Calibrating:", int(dt), ftoip(yaw), ftoip(ax), ftoip(ay)
+                )
         else:
             # Update time only when not calibrating!
             t0 = time()
-            print(t0, dt, yaw, pitch, roll, ax, ay, az)
+            print(t0, dt, yaw, ax, ay)
 
         # track FIFO count here in case there is > 1 packet available
         # (this lets us immediately read more without waiting for an
