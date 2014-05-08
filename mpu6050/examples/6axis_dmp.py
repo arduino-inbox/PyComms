@@ -27,6 +27,7 @@ def ftoip(v):
 
 
 def equal(l1, l2):
+    print(l1, l2)
     for k, v1 in l1:
         v2 = l2[k]
         if ftoip(v1) != ftoip(v2):
@@ -73,8 +74,8 @@ while True:
 
         if calibrating:
             if equal(
-                    l1=[yaw, pitch, roll, ax, ay, az],
-                    l2=[yaw0, pitch0, roll0, ax0, ay0, az0]
+                    [yaw, pitch, roll, ax, ay, az, ],
+                    [yaw0, pitch0, roll0, ax0, ay0, az0, ]
             ):
                 calibrating = False
                 print("Calibration done in ", dt, "seconds")
