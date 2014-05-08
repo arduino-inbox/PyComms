@@ -13,12 +13,12 @@ packetSize = mpu.dmpGetFIFOPacketSize()
 
 calibrating = True
 t0 = time()
-yaw0 = None
-pitch0 = None
-roll0 = None
-ax0 = None
-ay0 = None
-az0 = None
+yaw0 = 0
+pitch0 = 0
+roll0 = 0
+ax0 = 0
+ay0 = 0
+az0 = 0
 
 print "Calibrating..."
 
