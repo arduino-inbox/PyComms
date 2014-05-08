@@ -85,7 +85,10 @@ while True:
                 ax0 = ax
                 ay0 = ay
                 az0 = az
-                print("Calibrating:", dt, yaw, pitch, roll, ax, ay, az)
+                print(
+                    "Calibrating:", int(dt), ftoip(yaw), ftoip(pitch),
+                    ftoip(roll),
+                    ftoip(ax), ftoip(ay), ftoip(az))
         else:
             # Update time only when not calibrating!
             t0 = time()
