@@ -1,6 +1,7 @@
 # coding=utf-8
 import math
 import mpu6050
+from time import time
 
 # Sensor initialization
 mpu = mpu6050.MPU6050()
@@ -10,15 +11,16 @@ mpu.setDMPEnabled(True)
 # get expected DMP packet size for later comparison
 packetSize = mpu.dmpGetFIFOPacketSize()
 
+calibrating = True
+t0 = time()
+yaw0 = None
+pitch0 = None
+roll0 = None
+ax0 = None
+ay0 = None
+az0 = None
 
-def out(t):
-    r = []
-    for v in t:
-        r.append(
-            int(v * 100)
-        )
-    return r
-
+print "Calibrating..."
 
 while True:
     # Get INT_STATUS byte
@@ -47,14 +49,37 @@ while True:
         la = mpu.dmpGetLinearAccel(a, g)
         laiw = mpu.dmpGetLinearAccelInWorld(a, q)
 
-        print out([
-            ypr['yaw'] * 180 / math.pi,
-            ypr['pitch'] * 180 / math.pi,
-            ypr['roll'] * 180 / math.pi,
-            laiw['x'],
-            laiw['y'],
-            laiw['z'],
-        ])
+        yaw = int(ypr['yaw'] * 180 / math.pi)  # radians to degrees
+        pitch = int(ypr['pitch'] * 180 / math.pi)
+        roll = int(ypr['roll'] * 180 / math.pi)
+        ax = laiw['x'] * 9.8
+        ay = laiw['y'] * 9.8
+        az = laiw['z'] * 9.8
+        # Update timedelta
+        dt = time() - t0
+
+        if calibrating:
+            if (
+                    yaw == yaw0
+                    and pitch == pitch0
+                    and roll == roll0
+                    and ax == ax0
+                    and ay == ay0
+                    and az == az0
+            ):
+                calibrating = False
+                print("Calibration done in ", dt, "seconds")
+            else:
+                yaw0 = yaw
+                pitch0 = pitch
+                roll0 = roll
+                ax0 = ax
+                ay0 = ay
+                az0 = az
+        else:
+            # Update time only when not calibrating!
+            t0 = time()
+            print(t0, dt, yaw, pitch, roll, ax, ay, az)
 
         # track FIFO count here in case there is > 1 packet available
         # (this lets us immediately read more without waiting for an
