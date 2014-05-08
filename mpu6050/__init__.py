@@ -1875,8 +1875,13 @@ class MPU6050:
         }
 
     def dmpGetLinearAccelInWorld(self, a, q):
-        return qv_mult((q['w'], q['x'], q['y'], q['z'], ),
+        v = qv_mult((q['w'], q['x'], q['y'], q['z'], ),
                        (a['x'], a['y'], a['z'], ))
+        return {
+            'x': v[0],
+            'y': v[1],
+            'z': v[2],
+        }
 
     def dmpGetGravity(self, q):
         data = {
