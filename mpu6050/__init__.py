@@ -1864,11 +1864,19 @@ class MPU6050:
     def dmpGetGyro(self):
         pass
 
-    def dmpGetLinearAccel(self):
-        pass
+    def dmpGetLinearAccel(self, a, g):
+        """
+        Use dmpGetAccel output as a.
+        """
+        return {
+            'x': a['x'] - g['x'] * 8192,
+            'y': a['y'] - g['x'] * 8192,
+            'z': a['z'] - g['x'] * 8192,
+        }
 
-    def dmpGetLinearAccelInWorld(self):
-        pass
+    def dmpGetLinearAccelInWorld(self, a, q):
+        return qv_mult((q['w'], q['x'], q['y'], q['z'], ),
+                       (a['x'], a['y'], a['z'], ))
 
     def dmpGetGravity(self, q):
         data = {
@@ -1904,7 +1912,7 @@ class MPU6050:
     def dmpInitialize(self):
         # Resetting MPU6050
         self.reset()
-        sleep(0.05) # wait after reset
+        sleep(0.05)  # wait after reset
 
         # Disable sleep mode
         self.setSleepEnabled(False)
@@ -1963,20 +1971,20 @@ class MPU6050:
         self.setOTPBankValid(False)
 
         # Setting X/Y/Z gyro offsets to previous values
-        #self.setXGyroOffset(xgOffset);
-        #self.setYGyroOffset(ygOffset);
-        #self.setZGyroOffset(zgOffset);   
+        self.setXGyroOffset(xgOffset)
+        self.setYGyroOffset(ygOffset)
+        self.setZGyroOffset(zgOffset)
 
         # Setting X/Y/Z gyro user offsets to zero
-        self.setXGyroOffsetUser(0)
-        self.setYGyroOffsetUser(0)
-        self.setZGyroOffsetUser(0)
+        #self.setXGyroOffsetUser(0)
+        #self.setYGyroOffsetUser(0)
+        #self.setZGyroOffsetUser(0)
 
         # Writing final memory update 1/7 (function unknown)
         pos = 0
         j = 0
         dmpUpdate = []
-        while ((j < 4) or (j < dmpUpdate[2] + 3)):
+        while (j < 4) or (j < dmpUpdate[2] + 3):
             dmpUpdate.append(self.dmpUpdates[pos])
             j += 1
             pos += 1
@@ -1987,7 +1995,7 @@ class MPU6050:
         # Writing final memory update 2/7 (function unknown)
         j = 0
         dmpUpdate = []
-        while ((j < 4) or (j < dmpUpdate[2] + 3)):
+        while (j < 4) or (j < dmpUpdate[2] + 3):
             dmpUpdate.append(self.dmpUpdates[pos])
             j += 1
             pos += 1
