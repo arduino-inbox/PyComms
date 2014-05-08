@@ -10,6 +10,16 @@ mpu.setDMPEnabled(True)
 # get expected DMP packet size for later comparison
 packetSize = mpu.dmpGetFIFOPacketSize()
 
+
+def out(t):
+    r = []
+    for v in t:
+        r.append(
+            int(v * 100)
+        )
+    return r
+
+
 while True:
     # Get INT_STATUS byte
     mpuIntStatus = mpu.getIntStatus()
@@ -37,12 +47,14 @@ while True:
         la = mpu.dmpGetLinearAccel(a, g)
         laiw = mpu.dmpGetLinearAccelInWorld(a, q)
 
-        print(ypr['yaw'] * 180 / math.pi),
-        print(ypr['pitch'] * 180 / math.pi),
-        print(ypr['roll'] * 180 / math.pi),
-        print(laiw['x']),
-        print(laiw['y']),
-        print(laiw['z'])
+        print out([
+            ypr['yaw'] * 180 / math.pi,
+            ypr['pitch'] * 180 / math.pi,
+            ypr['roll'] * 180 / math.pi,
+            laiw['x'],
+            laiw['y'],
+            laiw['z'],
+        ])
 
         # track FIFO count here in case there is > 1 packet available
         # (this lets us immediately read more without waiting for an
