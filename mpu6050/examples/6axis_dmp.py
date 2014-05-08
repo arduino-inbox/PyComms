@@ -1,10 +1,13 @@
 # coding=utf-8
 import math
+import smbus
 import mpu6050
 from time import time
 
 # Sensor initialization
-mpu = mpu6050.MPU6050()
+mpu = mpu6050.MPU6050(
+    address=mpu6050.MPU6050.MPU6050_DEFAULT_ADDRESS,
+    bus=smbus.SMBus(1))
 mpu.dmpInitialize()
 mpu.setDMPEnabled(True)
 

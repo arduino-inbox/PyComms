@@ -724,8 +724,8 @@ class MPU6050:
     dmpPacketSize = 42
 
     # construct a new object with the I2C address of the MPU6050
-    def __init__(self, address=MPU6050_DEFAULT_ADDRESS):
-        self.i2c = PyComms(address)
+    def __init__(self, address=MPU6050_DEFAULT_ADDRESS, bus=None):
+        self.i2c = PyComms(address, bus)
         self.address = address
 
     def initialize(self):
