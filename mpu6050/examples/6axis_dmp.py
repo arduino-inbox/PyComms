@@ -27,7 +27,6 @@ def ftoip(v):
 
 
 def equal(l1, l2):
-    print(l1, l2)
     for k, v1 in enumerate(l1):
         v2 = l2[k]
         if ftoip(v1) != ftoip(v2):
